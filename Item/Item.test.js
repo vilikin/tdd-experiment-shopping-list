@@ -1,6 +1,6 @@
-const ListItem = require('./ListItem');
+const ListItem = require('./Item');
 
-describe('ListItem module', () => {
+describe('Item module', () => {
     test('should throw error when initialized with invalid parameters', () => {
         expect(() => {
             new ListItem();
@@ -20,6 +20,14 @@ describe('ListItem module', () => {
 
         expect(() => {
             new ListItem('item', -1);
+        }).toThrow();
+    });
+
+    test('should throw error when given invalid quantity', () => {
+        const listItem = new ListItem('item', 1);
+
+        expect(() => {
+            listItem.setQuantity(-1);
         }).toThrow();
     });
 
