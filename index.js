@@ -11,6 +11,26 @@ const rl = readline.createInterface({
 const users = new UserList();
 let currentUser;
 
+console.log(`Welcome to shopping list!
+
+Available commands:
+
+- login [name]
+Switches user to the name specified. You need to login before doing anything else.
+
+- add [itemName] [itemQuantity]
+Adds new item to the users shopping list with specified name and quantity.
+
+- remove [itemName]
+Removes specified item from the users shopping list.
+
+- update [itemName] [itemQuantity]
+Updates quantity of a specified item on the users shopping list.
+
+- view
+Displays contents of the users shopping list.
+`);
+
 rl.on('line', line => {
     const arguments = line.split(" ");
     const command = arguments[0];
@@ -38,6 +58,8 @@ rl.on('line', line => {
 
                 currentUser.addItem(new Item(arguments[1], arguments[2]));
 
+                console.log("Done.");
+
                 break;
             case 'remove':
                 throwIfNotLoggedIn();
@@ -47,6 +69,8 @@ rl.on('line', line => {
                 }
 
                 currentUser.removeItem(arguments[1]);
+
+                console.log("Done.");
 
                 break;
             case 'update':
@@ -58,12 +82,23 @@ rl.on('line', line => {
 
                 currentUser.updateItem(arguments[1], arguments[2]);
 
+                console.log("Done.");
+
                 break;
             case 'view':
                 throwIfNotLoggedIn();
 
-                console.log(currentUser.getItems().map(item => `${item.name}: ${item.quantity}`).join('\n'));
+                const items = currentUser.getItems().map(item => `${item.name}: ${item.quantity}`).join('\n');
 
+                if (items.length === 0) {
+                    console.log("No items on the shopping list");
+                } else {
+                    console.log(items);
+                }
+
+                break;
+            default:
+                console.log("Unknown command");
                 break;
         }
     } catch (err) {
@@ -73,6 +108,6 @@ rl.on('line', line => {
 
 function throwIfNotLoggedIn() {
     if (!currentUser) {
-        throw new Error('You have to be logged in to add new users');
+        throw new Error('You have to be logged in to use that command');
     }
 }
