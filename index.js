@@ -7,6 +7,10 @@ const rl = readline.createInterface({
 
 let currentUser;
 
-rl.on('line', (line) => {
+rl.on('line', line => {
 
 });
+
+function getCommand(line) {
+    return '';
+}
