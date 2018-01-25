@@ -48,6 +48,8 @@ rl.on('line', line => {
 
                 currentUser = user;
 
+                console.log("Logged in as " + userName);
+
                 break;
             case 'add':
                 throwIfNotLoggedIn();
